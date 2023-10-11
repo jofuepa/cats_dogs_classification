@@ -1,2 +1,2 @@
-# cats_dogs_classification
-Cats and dogs classification using Transfer Learning
+# Cats and Dogs Classification
+Cats and dogs image classification using PyTorch and Transfer Learning
