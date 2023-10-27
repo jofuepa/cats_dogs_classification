@@ -3,8 +3,8 @@ import torchvision.transforms as transforms
 from torchvision import models
 import torch.nn as nn
 from PIL import Image
+from io import BytesIO
 import torch
-import config
 
 def load_model(path_model):
     checkpoint = torch.load(path_model, map_location=device)
@@ -13,7 +13,7 @@ def load_model(path_model):
 def prediction(path_image):
     model.eval()
 
-    image = Image.open(path_image)
+    image = Image.open(BytesIO(path_image))
     image = transform(image)
     image = torch.unsqueeze(image, 0)
 
@@ -36,12 +36,6 @@ model = models.resnet18(weights=None)
 for param in model.parameters():
     param.requires_grad = False
 num_ftrs = model.fc.in_features
-model.fc = nn.Linear(num_ftrs, config.NUM_CLASSES)
+model.fc = nn.Linear(num_ftrs, 2)
 model.to(device)
-
-
-
-
-load_model(config.PATH_SAVE_MODEL)
-print("Prediction: ", prediction(config.PATH_IMAGE_PREDICT))
 
